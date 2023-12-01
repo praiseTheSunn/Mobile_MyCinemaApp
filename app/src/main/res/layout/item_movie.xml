@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        >
+        <ImageView
+            android:id="@+id/movieImage"
+            android:layout_width="150dp"
+            android:layout_height="220dp"
+            android:scaleType="centerCrop"
+
+            />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/movieTitle"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:layout_marginTop="8dp"
+        android:maxLines="2"/>
+
+    <TextView
+        android:id="@+id/movieDuration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_marginTop="4dp"/>
+
+</LinearLayout>
+
+
+
+<!--&lt;!&ndash; movie_item_layout.xml &ndash;&gt;-->
+
+<!--<LinearLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:orientation="vertical"-->
+<!--    android:padding="16dp">-->
+
+<!--    &lt;!&ndash; Movie Image &ndash;&gt;-->
+<!--    <ImageView-->
+<!--        android:id="@+id/movieImage"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/default_movie_image"-->
+<!--        android:contentDescription="default movie description"/>-->
+
+<!--    &lt;!&ndash; Movie Title &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/movieTitle"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="18sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:paddingTop="8dp"-->
+<!--        android:paddingBottom="4dp"-->
+<!--        android:text="default movie title"-->
+<!--        />-->
+
+<!--    &lt;!&ndash; Movie Duration &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/movieDuration"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingBottom="16dp"-->
+<!--        android:text="default movie duration"/>-->
+<!--</LinearLayout>-->

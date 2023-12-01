@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!-- Top line: Browse text and User icon -->
+    <RelativeLayout
+        android:id="@+id/topLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true">
+
+        <!-- Browse text -->
+        <TextView
+            android:id="@+id/browseText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Browse"
+            android:textStyle="bold"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:textSize="20sp"/>
+
+        <!-- User icon -->
+        <include
+            android:id="@+id/userIcon"
+            layout="@layout/part_user_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            />
+
+    </RelativeLayout>
+
+    <!-- Second line: SearchView with rounded black border -->
+    <RelativeLayout
+        android:id="@+id/searchBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topLine"
+        android:layout_margin="16dp"
+        android:background="@drawable/search_bar_background">
+
+        <!-- SearchView -->
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Search..."
+            android:iconifiedByDefault="false"
+            android:background="@android:color/transparent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:queryBackground="@android:color/transparent"
+
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/searchBarLayout"
+        android:padding="16dp"
+        android:id="@+id/thirdLine">
+
+        <!-- All Movies Text -->
+        <TextView
+            android:id="@+id/textAllMovies"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="All movies"
+            android:textStyle="bold"
+            android:gravity="start"/>
+
+        <!-- Filters Text -->
+        <TextView
+            android:id="@+id/textFilters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filters"
+            android:gravity="end"/>
+
+         Filters Icon
+        <ImageView
+            android:id="@+id/iconFilters"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_filter_icon"
+        android:layout_gravity="end"
+        android:layout_marginStart="8dp"/>
+
+    </LinearLayout>
+
+
+    <!-- Fourth line: RecyclerView (GridView) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/thirdLine"
+        android:layout_marginTop="16dp"
+        android:padding="16dp"/>
+
+
+
+</RelativeLayout>

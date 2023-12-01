@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homePageFragment">
+
+    <fragment
+        android:id="@+id/moviePageFragment"
+        android:name="com.example.mycinemaapp.activity.MoviePageFragment"
+        android:label="fragment_movie_page"
+        tools:layout="@layout/fragment_movie_page" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/homePageFragment"
+        android:name="com.example.mycinemaapp.activity.HomeFragment"
+        android:label="fragment_home_page"
+        tools:layout="@layout/fragment_home_page" >
+        <action
+            android:id="@+id/action_homePageFragment_to_allMovieFragment"
+            app:destination="@id/allMovieFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_homePageFragment_to_moviePageFragment"
+            app:destination="@id/moviePageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/allMovieFragment"
+        android:name="com.example.mycinemaapp.activity.AllMovieFragment"
+        android:label="fragment_all_movie"
+        tools:layout="@layout/fragment_all_movie" >
+        <action
+            android:id="@+id/action_allMovieFragment_to_moviePageFragment"
+            app:destination="@id/moviePageFragment" />
+    </fragment>
+</navigation>

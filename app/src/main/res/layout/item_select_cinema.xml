@@ -1,0 +1,25 @@
+<!-- activity_main.xml or your desired layout file -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- TextView for cinema name -->
+    <TextView
+        android:id="@+id/cinemaName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cinema Name"
+        android:textSize="18sp"
+        android:padding="8dp"/>
+
+    <!-- RecyclerView for show selection -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/selectShowRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"/>
+</LinearLayout>
