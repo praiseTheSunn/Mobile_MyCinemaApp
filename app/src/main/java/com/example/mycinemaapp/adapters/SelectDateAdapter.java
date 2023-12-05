@@ -1,34 +1,39 @@
 package com.example.mycinemaapp.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mycinemaapp.R;
-import com.example.mycinemaapp.activity.HomeFragmentDirections;
 import com.example.mycinemaapp.models.SelectCinemaTimeItem;
 import com.example.mycinemaapp.models.SelectDateItem;
+import com.example.mycinemaapp.viewModels.MoviePageViewModel;
+import com.example.mycinemaapp.viewModels.SeatBookingViewModel;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
 
-public class DateSelectAdapter extends RecyclerView.Adapter<DateSelectAdapter.DateViewHolder> {
+public class SelectDateAdapter extends RecyclerView.Adapter<SelectDateAdapter.DateViewHolder> {
 
     private final RecyclerView selectCinemaTimeRecylerView;
     private List<SelectDateItem> selectDateItemList;
     private List<List<SelectCinemaTimeItem>> selectCinemaTimeLists;
+    MoviePageViewModel moviePageViewModel;
+    MaterialCardView previousSelectDateCardView = null;
 
-    public DateSelectAdapter(List<SelectDateItem> selectDateItemList, List<List<SelectCinemaTimeItem>> selectCinemaTimeLists, RecyclerView selectCinemaTimeRecylerView) {
+    public SelectDateAdapter(List<SelectDateItem> selectDateItemList, List<List<SelectCinemaTimeItem>> selectCinemaTimeLists, RecyclerView selectCinemaTimeRecylerView, MoviePageViewModel moviePageViewModel) {
         this.selectDateItemList = selectDateItemList;
         this.selectCinemaTimeLists = selectCinemaTimeLists;
         this.selectCinemaTimeRecylerView = selectCinemaTimeRecylerView;
+        this.moviePageViewModel =  moviePageViewModel;
     }
 
     @NonNull
@@ -47,17 +52,32 @@ public class DateSelectAdapter extends RecyclerView.Adapter<DateSelectAdapter.Da
         // Bind data to the ViewHolder
         holder.textViewWeekday.setText(selectDateItem.getWeekday());
         holder.textViewDay.setText(String.valueOf(selectDateItem.getDay()));
+        holder.selectDateCardView.setChecked(false);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // When the TextView is clicked, start a new activity
-//                Intent intent = new Intent(HomeActivity.this, AllMovieActivity.class);
-//                startActivity(intent);
+                moviePageViewModel.movieShow.setDate(selectDateItem.getDate());
+
+                if (previousSelectDateCardView == holder.selectDateCardView) {
+                    if (holder.selectDateCardView.isChecked()) {
+                        holder.selectDateCardView.setChecked(false);
+                    }
+                    else {
+                        holder.selectDateCardView.setChecked(true);
+                    }
+                }
+                else {
+                    holder.selectDateCardView.setChecked(true);
+                    if (previousSelectDateCardView != null) {
+                        previousSelectDateCardView.setChecked(false);
+                    }
+                    previousSelectDateCardView = holder.selectDateCardView;
+                }
 
 //                findNavController().navigate(R.id);
                 RecyclerView selectShowTimeRecyclerView = view.findViewById(R.id.selectShowRecyclerView);
-                SelectCinemaTimeAdapter dateSelectAdapter = new SelectCinemaTimeAdapter(view.getContext(), selectCinemaTimeItemList, selectShowTimeRecyclerView);
+                SelectCinemaTimeAdapter dateSelectAdapter = new SelectCinemaTimeAdapter(view.getContext(), selectCinemaTimeItemList, selectShowTimeRecyclerView, moviePageViewModel);
 
                 selectCinemaTimeRecylerView.setAdapter(dateSelectAdapter);
 
@@ -75,11 +95,13 @@ public class DateSelectAdapter extends RecyclerView.Adapter<DateSelectAdapter.Da
     public static class DateViewHolder extends RecyclerView.ViewHolder {
         TextView textViewWeekday;
         TextView textViewDay;
+        MaterialCardView selectDateCardView;
 
         public DateViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewWeekday = itemView.findViewById(R.id.textViewWeekday);
             textViewDay = itemView.findViewById(R.id.textViewDay);
+            selectDateCardView = itemView.findViewById(R.id.selectDateCardView);
         }
     }
 }

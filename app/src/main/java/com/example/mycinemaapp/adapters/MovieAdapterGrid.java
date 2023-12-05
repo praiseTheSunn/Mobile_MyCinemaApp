@@ -18,11 +18,9 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mycinemaapp.R;
-import com.example.mycinemaapp.activity.AllMovieFragmentDirections;
-import com.example.mycinemaapp.activity.HomeFragmentDirections;
 import com.example.mycinemaapp.activity.MoviePageFragment;
 import com.example.mycinemaapp.models.MovieEntity;
-import com.example.mycinemaapp.models.MovieParcelable;
+import com.example.mycinemaapp.parcelable.MovieParcelable;
 
 import java.util.List;
 
@@ -90,6 +88,10 @@ public class MovieAdapterGrid extends RecyclerView.Adapter<MovieAdapterGrid.Movi
     @Override
     public int getItemCount() {
         return movieList.size();
+    }
+
+    public void setNewMovieEntities(List<MovieEntity> newMovieEntities) {
+        movieList = newMovieEntities;
     }
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder {

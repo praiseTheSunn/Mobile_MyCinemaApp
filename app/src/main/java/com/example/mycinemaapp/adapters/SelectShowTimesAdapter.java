@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mycinemaapp.R;
+import com.example.mycinemaapp.viewModels.MoviePageViewModel;
+import com.example.mycinemaapp.viewModels.SeatBookingViewModel;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -17,10 +20,15 @@ public class SelectShowTimesAdapter extends RecyclerView.Adapter<SelectShowTimes
 
     private List<String> showTimes;
     private Context context;
+    MaterialCardView previousSelectTimeCardView;
+    MoviePageViewModel moviePageViewModel;
+    Long cinemaId;
 
-    public SelectShowTimesAdapter(Context context, List<String> showTimes) {
+    public SelectShowTimesAdapter(Context context, List<String> showTimes, Long cinemaId, MoviePageViewModel moviePageViewModel) {
         this.context = context;
         this.showTimes = showTimes;
+        this.moviePageViewModel = moviePageViewModel;
+        this.cinemaId = cinemaId;
     }
 
     @NonNull
@@ -34,6 +42,29 @@ public class SelectShowTimesAdapter extends RecyclerView.Adapter<SelectShowTimes
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String time = showTimes.get(position);
         holder.textViewTime.setText(time);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (previousSelectTimeCardView == holder.selectTimeCardView) {
+                    if (holder.selectTimeCardView.isChecked()) {
+                        holder.selectTimeCardView.setChecked(false);
+                    } else {
+                        holder.selectTimeCardView.setChecked(true);
+                    }
+                } else {
+                    holder.selectTimeCardView.setChecked(true);
+                    if (previousSelectTimeCardView != null) {
+                        previousSelectTimeCardView.setChecked(false);
+                    }
+                    previousSelectTimeCardView = holder.selectTimeCardView;
+                }
+
+                moviePageViewModel.movieShow.setShowTime(time);
+                moviePageViewModel.movieShow.setCinemaId(cinemaId);
+            }
+        });
     }
 
     @Override
@@ -43,10 +74,12 @@ public class SelectShowTimesAdapter extends RecyclerView.Adapter<SelectShowTimes
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textViewTime;
+        MaterialCardView selectTimeCardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewTime = itemView.findViewById(R.id.textViewTime);
+            selectTimeCardView = itemView.findViewById(R.id.selectTimeCardView);
         }
     }
 }

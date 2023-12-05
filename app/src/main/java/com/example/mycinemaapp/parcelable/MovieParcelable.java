@@ -1,13 +1,13 @@
-package com.example.mycinemaapp.models;
+package com.example.mycinemaapp.parcelable;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.mycinemaapp.models.MovieEntity;
 
 public class MovieParcelable implements Parcelable {
 
+    private Long id;
     private String imagePath;
     private String title;
     private float rating;
@@ -39,6 +39,7 @@ public class MovieParcelable implements Parcelable {
 //    }
 
     public MovieParcelable(MovieEntity movie) {
+        this.id = movie.getId();
         this.imagePath = movie.getImagePath();
         this.title = movie.getTitle();
         this.rating = movie.getRating();
@@ -121,5 +122,9 @@ public class MovieParcelable implements Parcelable {
         dest.writeString(type);
         dest.writeString(categories);
         dest.writeString(synopsis);
+    }
+
+    public Long getId() {
+        return id;
     }
 }

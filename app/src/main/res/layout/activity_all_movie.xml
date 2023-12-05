@@ -92,12 +92,12 @@
             android:text="Filters"
             android:gravity="end"/>
 
-         Filters Icon
+<!--         Filters Icon-->
         <ImageView
             android:id="@+id/iconFilters"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/ic_filter_icon"
+            android:src="@drawable/filter_icon"
         android:layout_gravity="end"
         android:layout_marginStart="8dp"/>
 

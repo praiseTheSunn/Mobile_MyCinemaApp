@@ -8,9 +8,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,20 +22,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mycinemaapp.R;
-import com.example.mycinemaapp.adapters.DateSelectAdapter;
+import com.example.mycinemaapp.adapters.SelectDateAdapter;
+import com.example.mycinemaapp.models.MovieShowEntity;
 import com.example.mycinemaapp.models.SelectCinemaTimeItem;
 import com.example.mycinemaapp.models.SelectDateItem;
 import com.example.mycinemaapp.models.MovieEntity;
-import com.example.mycinemaapp.models.MovieParcelable;
+import com.example.mycinemaapp.parcelable.MovieParcelable;
+import com.example.mycinemaapp.parcelable.MovieShowParcelable;
+import com.example.mycinemaapp.repositories.CinemaRepository;
+import com.example.mycinemaapp.repositories.MovieShowRepository;
+import com.example.mycinemaapp.viewModels.MoviePageViewModel;
+import com.example.mycinemaapp.viewModels.SeatBookingViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +57,8 @@ public class MoviePageFragment extends Fragment {
     // TODO: Rename and change types of parameters
 //    private String mParam1;
     private MovieParcelable mMovie;
+
+    private MoviePageViewModel moviePageViewModel;
 
     public MoviePageFragment() {
         // Required empty public constructor
@@ -78,6 +89,9 @@ public class MoviePageFragment extends Fragment {
         if (getArguments() != null) {
             mMovie = getArguments().getParcelable(ARG_PARAM1);
         }
+        moviePageViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                .get(MoviePageViewModel.class);
+        moviePageViewModel.movieShow = new MovieShowEntity(new Date(), "", (long)0, (long)0, mMovie.getId());
     }
 
     @Override
@@ -97,19 +111,39 @@ public class MoviePageFragment extends Fragment {
             updateMovieInformation(view);
 
             List<SelectDateItem> selectDateItemList = getDates();
-            List<List<SelectCinemaTimeItem>> selectCinemaTimeLists = getCinemaTimeLists();
+            List<List<SelectCinemaTimeItem>> selectCinemaTimeLists = getCinemaTimeLists(selectDateItemList);
             int len = selectDateItemList.size();
 
             RecyclerView selectShowRecyclerView = view.findViewById(R.id.cinemaOptionsRecyclerView);
-            DateSelectAdapter dateSelectAdapter = new DateSelectAdapter(selectDateItemList, selectCinemaTimeLists, selectShowRecyclerView);
+            SelectDateAdapter selectDateAdapter = new SelectDateAdapter(selectDateItemList, selectCinemaTimeLists, selectShowRecyclerView, moviePageViewModel);
 
             RecyclerView recyclerView = view.findViewById(R.id.dateOptionsRecyclerView);
-            recyclerView.setAdapter(dateSelectAdapter);
+            recyclerView.setAdapter(selectDateAdapter);
 
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
             recyclerView.setLayoutManager(layoutManager);
-//            recyclerView.setAdapter();
-//            background.setImageResource(mMovie.getImagePath());
+
+            FloatingActionButton fab = view.findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    moviePageViewModel.setMovieImagePath(mMovie.getImagePath());
+
+                    Bundle args = new Bundle();
+
+                    MovieShowParcelable movieShowParcelable = new MovieShowParcelable(moviePageViewModel.movieShow);
+
+                    Log.d("viewModel", "" + moviePageViewModel.movieShow.getShowTime() + moviePageViewModel.movieShow.getShowDate());
+
+//                    MovieParcelable movieParcelable = new MovieParcelable(movie);
+                    args.putParcelable(SeatBookingFragment.ARG_PARAM1, movieShowParcelable);
+                    args.putString(SeatBookingFragment.ARG_PARAM2, mMovie.getImagePath());
+
+                    NavDirections action = MoviePageFragmentDirections.actionMoviePageFragmentToSeatBookingFragment();
+                    Navigation.findNavController(view).navigate(action.getActionId(), args);
+                }
+            });
         }
     }
 
@@ -122,7 +156,11 @@ public class MoviePageFragment extends Fragment {
             Date date = calendar.getTime();
             String abbreviatedWeekday = new SimpleDateFormat("EEE", Locale.ENGLISH).format(date);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
-            dateList.add(new SelectDateItem(abbreviatedWeekday, day));
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            String ymdDate = sdf.format(date);
+
+            dateList.add(new SelectDateItem(abbreviatedWeekday, day, java.sql.Date.valueOf(ymdDate)));
 
             // Move to the next day
             calendar.add(Calendar.DAY_OF_MONTH, 1);
@@ -131,29 +169,38 @@ public class MoviePageFragment extends Fragment {
         return dateList;
     }
 
-    private List<List<SelectCinemaTimeItem>> getCinemaTimeLists() {
+    private List<List<SelectCinemaTimeItem>> getCinemaTimeLists(List<SelectDateItem> dateList) {
         List<List<SelectCinemaTimeItem>> selectCinemaTimeLists = new ArrayList<>();
 
         // List of cinema names
-        List<String> cinemaNames = Arrays.asList("Cinema A", "Cinema B", "Cinema C", "Cinema D", "Cinema E");
+//        List<String> cinemaNames = Arrays.asList("Cinema A", "Cinema B", "Cinema C", "Cinema D", "Cinema E");
 
         // List of show times
-        List<String> showTimes = Arrays.asList("10:00 AM", "1:00 PM", "4:00 PM", "7:00 PM", "10:00 PM");
+//        List<String> showTimes = Arrays.asList("10:00 AM", "1:00 PM", "4:00 PM", "7:00 PM", "10:00 PM");
 
-        Random random = new Random();
+//        Random random = new Random();
 
         // Number of cinema lists
-        int numCinemaLists = 8; // You can adjust this as needed
+        int numCinemaLists = dateList.size(); // You can adjust this as needed
+
+        CinemaRepository cinemaRepository = new CinemaRepository(getContext());
+        MovieShowRepository movieShowRepository = new MovieShowRepository(getContext());
 
         for (int i = 0; i < numCinemaLists; i++) {
             List<SelectCinemaTimeItem> cinemaTimeItems = new ArrayList<>();
+            SelectDateItem curDate = dateList.get(i);
 
-            // Randomly initialize cinema names and show times
+            Date date = curDate.getDate();
+            List<String> cinemaNames = movieShowRepository.getCinemaNamesByDateAndMovieId(date, mMovie.getId());
+            List<Long> cinemaIds = movieShowRepository.getCinemaIdsByDateAndMovieId(date, mMovie.getId()).blockingFirst();
+
             for (int j = 0; j < cinemaNames.size(); j++) {
-                String randomCinemaName = cinemaNames.get(random.nextInt(cinemaNames.size()));
-                List<String> randomShowTimes = new ArrayList<>(showTimes);
-                randomShowTimes.remove(random.nextInt(randomShowTimes.size())); // Randomly remove a show time
-                cinemaTimeItems.add(new SelectCinemaTimeItem(randomCinemaName, randomShowTimes));
+                Long cinemaId = cinemaIds.get(j);
+                String cinemaName = cinemaNames.get(j);
+
+                List<String> showTimes = movieShowRepository.getTimesByDateAndMovieIdAndCinemaId(date, mMovie.getId(), cinemaId);
+//                List<String> showTimes = movieShowRepository.getShowTimes(date, cinemaName);
+                cinemaTimeItems.add(new SelectCinemaTimeItem(cinemaId, cinemaName, showTimes));
             }
 
             selectCinemaTimeLists.add(cinemaTimeItems);
@@ -192,5 +239,4 @@ public class MoviePageFragment extends Fragment {
         Bitmap imageBitMap = loadBitmapFromAsset(getContext(), imagePath);
         background.setImageBitmap(imageBitMap);
     }
-
 }

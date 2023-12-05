@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <!-- Element 1: Gray Circle -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/circle_gray"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Available"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="10sp"
+            />
+    </LinearLayout>
+
+    <!-- Element 2: Black Circle -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/circle_black"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Booked"
+            android:textColor="@android:color/black"
+            android:textSize="10sp"/>
+    </LinearLayout>
+
+    <!-- Element 3: Blue Circle -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/circle_blue"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Selection"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="10sp"/>
+    </LinearLayout>
+</LinearLayout>

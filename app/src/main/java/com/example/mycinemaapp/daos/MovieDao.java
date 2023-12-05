@@ -30,4 +30,10 @@ public interface MovieDao {
 
     @Query("SELECT COUNT(*) FROM movies")
     int getCount();
+
+    @Query("SELECT * FROM movies WHERE rating >= 4.8")
+    Flowable<List<MovieEntity>> getHotMovies();
+
+    @Query("SELECT * FROM movies WHERE title LIKE '%' || :newText || '%'")
+    Flowable<List<MovieEntity>> getMoviesByNames(String newText);
 }

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#f2f2f2">
+
+    <TextView
+        android:id="@+id/tvRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:textStyle="bold"
+        android:textSize="28sp"
+        android:textColor="#333333"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/tvSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvRegister"
+        android:layout_marginTop="8dp"
+        android:text="Sign up for a new account"
+        android:textColor="#808080"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Name -->
+    <TextView
+        android:id="@+id/tvYourName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSignUp"
+        android:layout_marginTop="16dp"
+        android:text="YOUR NAME"
+        android:textColor="#808080" />
+
+    <EditText
+        android:id="@+id/etYourName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvYourName"
+        android:layout_marginTop="8dp"
+        android:background="#ffffff"
+        android:hint="Enter your name"
+        android:padding="10dp"
+        android:textColor="#333333"
+        android:inputType="text" />
+
+    <!-- Email -->
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etYourName"
+        android:layout_marginTop="16dp"
+        android:text="EMAIL"
+        android:textColor="#808080" />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvEmail"
+        android:layout_marginTop="8dp"
+        android:background="#ffffff"
+        android:hint="Enter your email"
+        android:padding="10dp"
+        android:textColor="#333333"
+        android:inputType="textEmailAddress" />
+
+    <!-- Password -->
+    <TextView
+        android:id="@+id/tvPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etEmail"
+        android:layout_marginTop="16dp"
+        android:text="PASSWORD"
+        android:textColor="#808080" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPassword"
+        android:layout_marginTop="8dp"
+        android:background="#ffffff"
+        android:hint="Enter your password"
+        android:padding="10dp"
+        android:textColor="#333333"
+        android:inputType="textPassword" />
+
+    <!-- Confirm Password -->
+    <TextView
+        android:id="@+id/tvConfirmPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etPassword"
+        android:layout_marginTop="16dp"
+        android:text="CONFIRM PASSWORD"
+        android:textColor="#808080" />
+
+    <EditText
+        android:id="@+id/etConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvConfirmPassword"
+        android:layout_marginTop="8dp"
+        android:background="#ffffff"
+        android:hint="Confirm your password"
+        android:padding="10dp"
+        android:textColor="#333333"
+        android:inputType="textPassword" />
+
+    <!-- Create Account Button -->
+    <Button
+        android:id="@+id/btnCreateAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etConfirmPassword"
+        android:layout_marginTop="24dp"
+        android:text="Create Account"
+        android:textColor="#ffffff"
+        android:background="@drawable/blue_button_background"
+        android:padding="12dp"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
+
+    <!-- Already a user? Login Now -->
+    <TextView
+        android:id="@+id/tvLoginNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnCreateAccount"
+        android:layout_marginTop="16dp"
+        android:text="Already a user? Login now"
+        android:textColor="#0000ff" />
+
+</RelativeLayout>

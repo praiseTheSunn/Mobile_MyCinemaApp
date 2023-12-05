@@ -1,10 +1,12 @@
 package com.example.mycinemaapp.repositories;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
 import com.example.mycinemaapp.daos.MovieDao;
+import com.example.mycinemaapp.databases.MovieDatabase;
 import com.example.mycinemaapp.models.MovieEntity;
 
 import java.util.List;
@@ -13,32 +15,40 @@ import io.reactivex.rxjava3.core.Flowable;
 
 // MovieRepository.java
 public class MovieRepository {
+    private MovieDatabase movieDatabase;
 
-    private MovieDao movieDao;
-
-    public MovieRepository(MovieDao movieDao) {
-        this.movieDao = movieDao;
+    public MovieRepository(Context context) {
+        movieDatabase = MovieDatabase.getInstance(context);
     }
 
     public Flowable<List<MovieEntity>> getAllMovies() {
-        return movieDao.getAllMovies();
+        return movieDatabase.movieDao().getAllMovies();
     }
 
     public void insertMovie(MovieEntity movie) {
         // Use a background thread for database operations
-        new InsertMovieAsyncTask(movieDao).execute(movie);
+        new InsertMovieAsyncTask(movieDatabase.movieDao()).execute(movie);
     }
 
     public int getCount() {
 //        return movieDao.getCount();
         try {
-            return new GetCountAsyncTask(movieDao).execute().get();
+            return new GetCountAsyncTask(movieDatabase.movieDao()).execute().get();
         } catch (Exception e) {
             e.printStackTrace();
             return 0; // Handle the exception according to your requirements
         }
 
     }
+    public Flowable<List<MovieEntity>> getHotMovies() {
+        return movieDatabase.movieDao().getHotMovies();
+    }
+
+    public List<MovieEntity> getAllMoviesByNames(String newText) {
+        List<MovieEntity> newMovies = movieDatabase.movieDao().getMoviesByNames(newText).blockingFirst();
+        return newMovies;
+    }
+
 
     // AsyncTask to insert a movie in the background
     private static class InsertMovieAsyncTask extends AsyncTask<MovieEntity, Void, Void> {

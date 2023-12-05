@@ -3,7 +3,6 @@ package com.example.mycinemaapp.activity;
 import static com.example.mycinemaapp.utils.Utility.loadBitmapFromAsset;
 
 import android.content.Context;
-import android.content.Entity;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.helper.widget.Carousel;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
@@ -21,32 +19,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mycinemaapp.R;
 import com.example.mycinemaapp.adapters.HomeSliderAdapter;
-import com.example.mycinemaapp.daos.MovieDao;
-import com.example.mycinemaapp.databases.MovieDatabase;
 import com.example.mycinemaapp.models.MovieEntity;
 import com.example.mycinemaapp.utils.CsvReaderUtil;
-import com.example.mycinemaapp.utils.DataInitializer;
-import com.example.mycinemaapp.viewModels.HomeFragmentViewModel;
 import com.example.mycinemaapp.adapters.MovieAdapterGrid;
 import com.example.mycinemaapp.models.Movie;
-import com.example.mycinemaapp.viewModels.MovieViewModel;
+import com.example.mycinemaapp.viewModels.HomeFragmentViewModel;
+import com.example.mycinemaapp.viewModels.MoviePageViewModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 //import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -58,8 +50,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-    private HomeFragmentViewModel mViewModel;
-    private MovieViewModel viewModel;
+    private HomeFragmentViewModel viewModel;
     List<MovieEntity> movieList = null;
     List<MovieEntity> hotMovieList = null;
 
@@ -67,7 +58,7 @@ public class HomeFragment extends Fragment {
 
     private ViewPager2 viewPager;
 
-    Disposable disposable;
+    Disposable movieListUpdateDisposable;
 
 
     public HomeFragment() {
@@ -90,19 +81,11 @@ public class HomeFragment extends Fragment {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
-//        mViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
-//        mViewModel.setMotionProgress(motionLayout.getTransitionState());
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_home_page, container, false);
-
 
         return inflater.inflate(R.layout.activity_home, container, false);
     }
@@ -111,43 +94,32 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        movieList = getMovies(getContext(), "movie.csv");
-        hotMovieList = getMovies(getContext(), "movie_hot.csv");
-
-//         Initialize ViewModel
+        //         Initialize ViewModel
         viewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
-                .get(MovieViewModel.class);
+                .get(HomeFragmentViewModel.class);
 
-        movieList = viewModel.getMovies().blockingFirst();
+//        movieList = getMovies(getContext(), "movie.csv");
+//        hotMovieList = getMovies(getContext(), "movie_hot.csv");
+
+        movieList = viewModel.getMovies(getContext());
+        hotMovieList = viewModel.getHotMovies(getContext());
+//        movieList = viewModel.getMovies().getValue();
+//        hotMovieList =  viewModel.getHotMovies().getValue();
 //
-        Log.d("INSERT", "INSERT DO CHUA D " + movieList.size());
 
-////         Observe changes in the movies LiveData
-//        viewModel.getMovies().observe(getViewLifecycleOwner(), movieEntities -> {
-//            // Update UI with the list of movies
-//            // Implement your UI logic here
-//            movieList = movieEntities;
-//        });
-
-        disposable = viewModel.getMovies()
-                .observeOn(AndroidSchedulers.mainThread()) // Make sure UI updates happen on the main thread
-                .subscribe(movieEntities -> {
-                    // Update UI with the list of movies
-                    // Implement your UI logic here
-                    Log.d("DATABASE", " UPDATE CHUA D MA");
-                    movieList = movieEntities;
-                    view.invalidate();
-                }, throwable -> {
-                    // Handle errors if any
-                    Log.e("DATABASE", "Error updating UI", throwable);
-
-                });
+        // update movies
+//        disposable = viewModel.getMovies()
+//                .observeOn(AndroidSchedulers.mainThread()) // Make sure UI updates happen on the main thread
+//                .subscribe(movieEntities -> {
+//                    // Update UI with the list of movies
+//                    // Implement your UI logic here
+//                    movieList = movieEntities;
+//                }, throwable -> {
+//                    // Handle errors if any
+//                    Log.e("DATABASE", "Error updating UI", throwable);
 //
-//        MovieDao movieDao = MovieDatabase.getInstance(getContext()).movieDao();
-
-
-//         movieList = viewModel.getMovies().blockingFirst();
-
+//                });
+//
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
 
@@ -185,48 +157,28 @@ public class HomeFragment extends Fragment {
 //        setupCarousel(view, movieList);
 
 
-        TextView textView = view.findViewById(R.id.textViewAll);
+        TextView textViewAll = view.findViewById(R.id.textViewAll);
 
         // Set an OnClickListener on the TextView
-        textView.setOnClickListener(new View.OnClickListener() {
+        textViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // When the TextView is clicked, start a new activity
-//                Intent intent = new Intent(HomeActivity.this, AllMovieActivity.class);
-//                startActivity(intent);
-
-//                findNavController().navigate(R.id);
-
-                MovieEntity placeholderMovie = new MovieEntity(
-                        100,
-                        "movie_poster/inception.jpg", // Replace with your placeholder image resource
-                        "Placeholder Movie 2",
-                        0.0f,
-                        0,
-                        "2D",
-                        "hehe",
-                        "No synopsis available"
-                );
-                viewModel.insertMovie(placeholderMovie);
-
-//                NavDirections action = HomeFragmentDirections.actionHomePageFragmentToAllMovieFragment();
-//                Navigation.findNavController(view).navigate(action);
-
-
+                NavDirections action = HomeFragmentDirections.actionHomePageFragmentToAllMovieFragment();
+                Navigation.findNavController(view).navigate(action);
             }
         });
     }
 
     private void setupCarousel(@NonNull View view, List<Movie> movieList) {
         carousel = view.findViewById(R.id.carousel);
-        mViewModel.setMotionProgress(carousel.getCurrentIndex());
-
-        mViewModel.setMotionProgress(carousel.getCurrentIndex());
-        mViewModel.getMotionProgress().observe(getViewLifecycleOwner(), newProgress -> {
-            Log.d("motion view update", " update chua d" + newProgress);
-            if (newProgress != null)
-                carousel.transitionToIndex(newProgress, 0);
-        });
+//        mViewModel.setMotionProgress(carousel.getCurrentIndex());
+//
+//        mViewModel.setMotionProgress(carousel.getCurrentIndex());
+//        mViewModel.getMotionProgress().observe(getViewLifecycleOwner(), newProgress -> {
+//            Log.d("motion view update", " update chua d" + newProgress);
+//            if (newProgress != null)
+//                carousel.transitionToIndex(newProgress, 0);
+//        });
 
         carousel.setAdapter(new Carousel.Adapter() {
             @Override
@@ -339,68 +291,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        disposable.dispose();
+//        movieListUpdateDisposable.dispose();
     }
 
-    //    @NonNull
-//    private static List<Movie> getMovies() {
-//        // Create a list of Movie objects
-//        List<Movie> movieList = new ArrayList<>();
-//        ArrayList<String> categories = new ArrayList<String>();
-//        categories.add("Action");
-//        Movie placeholderMovie = new Movie(
-//                R.drawable.default_movie_image, // Replace with your placeholder image resource
-//                "Placeholder Movie",
-//                0.0f,
-//                0,
-//                "2D",
-//                categories,
-//                "No synopsis available"
-//        );
-//        Movie placeholderMovie2 = new Movie(
-//                R.drawable.ic_filter_icon, // Replace with your placeholder image resource
-//                "Placeholder Movie",
-//                0.0f,
-//                0,
-//                "2D",
-//                categories,
-//                "No synopsis available"
-//        );
-//        Movie placeholderMovie3 = new Movie(
-//                R.drawable.example_image2, // Replace with your placeholder image resource
-//                "Placeholder Movie",
-//                0.0f,
-//                0,
-//                "2D",
-//                categories,
-//                "No synopsis available"
-//        );
-//        Movie placeholderMovie4 = new Movie(
-//                R.drawable.example_image3, // Replace with your placeholder image resource
-//                "Placeholder Movie",
-//                0.0f,
-//                0,
-//                "2D",
-//                categories,
-//                "No synopsis available"
-//        );
-//        Movie placeholderMovie5 = new Movie(
-//                R.drawable.example_image4, // Replace with your placeholder image resource
-//                "Placeholder Movie",
-//                0.0f,
-//                0,
-//                "2D",
-//                categories,
-//                "No synopsis available"
-//        );
-////        Movie placeholderMovie2 = placeholderMovie;
-////        Movie placeholderMovie3 = placeholderMovie;
-////        Movie placeholderMovie4 = placeholderMovie;
-//        movieList.add(placeholderMovie);
-//        movieList.add(placeholderMovie2);
-//        movieList.add(placeholderMovie3);
-//        movieList.add(placeholderMovie4);
-//        movieList.add(placeholderMovie5);
-//        return movieList;
-//    }
 }

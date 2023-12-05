@@ -1,24 +1,27 @@
 package com.example.mycinemaapp.activity;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.example.mycinemaapp.R;
 import com.example.mycinemaapp.adapters.MovieAdapterGrid;
-import com.example.mycinemaapp.models.Movie;
 import com.example.mycinemaapp.models.MovieEntity;
 import com.example.mycinemaapp.utils.CsvReaderUtil;
+import com.example.mycinemaapp.viewModels.AllMovieFragmentViewModel;
+import com.example.mycinemaapp.viewModels.HomeFragmentViewModel;
+import com.example.mycinemaapp.viewModels.MoviePageViewModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +34,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class AllMovieFragment extends Fragment {
-
+    private AllMovieFragmentViewModel viewModel;
     public AllMovieFragment() {
         // Required empty public constructor
     }
@@ -69,8 +72,11 @@ public class AllMovieFragment extends Fragment {
         // Assume you have a RecyclerView with the ID "recyclerView" in your layout
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
 
-//        List<Movie> movieList = getMovies();
-        List<MovieEntity> movieList = getMovies(getContext(), "movie.csv");
+        viewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                .get(AllMovieFragmentViewModel.class);
+
+
+        List<MovieEntity> movieList = viewModel.getMovies(getContext());
 
         // Create the adapter and set it to the RecyclerView
         MovieAdapterGrid movieAdapterGrid = new MovieAdapterGrid(getContext(), movieList, AllMovieFragmentDirections.actionAllMovieFragmentToMoviePageFragment());
@@ -80,102 +86,26 @@ public class AllMovieFragment extends Fragment {
         int spanCount = 2;
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), spanCount, GridLayoutManager.VERTICAL , false);
         recyclerView.setLayoutManager(layoutManager);
-    }
 
+        SearchView searchView = view.findViewById(R.id.searchView);
 
-    public List<MovieEntity> getMovies(Context context, String fileName) {
-        List<MovieEntity> res = new ArrayList<>();
-        try {
-            List<String[]> csvData = CsvReaderUtil.readCsvFromAssets(context, fileName);
-
-            int i = 0;
-            for (String[] row : csvData) {
-                // Parse CSV data and create MovieEntity objects
-                MovieEntity movie = parseCsvRow(row);
-                movie.setId(i++);
-
-                // Insert each movie into the Room database
-                res.add(movie);
-                int a = 5;
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // This method is called when the user submits the query (e.g., presses Enter).
+                // Handle the search here.
+                return true;
             }
-            return res;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
-    private MovieEntity parseCsvRow(String[] row) {
-        // Implement logic to convert CSV row to MovieEntity object
-        // For example:
-        return new MovieEntity(
-                (row[0]),    // Assuming the first column is the image resource ID
-                row[1],                      // Title
-                Float.parseFloat(row[2]),    // Rating
-                Integer.parseInt(row[3]),    // Duration
-                row[4],                      // Type
-                new ArrayList<>(Arrays.asList(row[5].split(","))),  // Categories
-                row[6]                       // Synopsis
-        );
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // This method is called when the text in the search view changes.
+                // You can perform actions while the user is typing.
+                List<MovieEntity> newMovieEntities = viewModel.getMoviesWithNames(getContext(), newText);
+                movieAdapterGrid.setNewMovieEntities(newMovieEntities);
+                movieAdapterGrid.notifyDataSetChanged();
+                return true;
+            }
+        });
     }
-
-//    @NonNull
-//    private static List<Movie> getMovies() {
-//        // Create a list of Movie objects
-//        List<Movie> movieList = new ArrayList<>();
-//        Movie placeholderMovie = new Movie(
-//                R.drawable.default_movie_image, // Replace with your placeholder image resource
-//                "Placeholder Movie",
-//                0.0f,
-//                0,
-//                "2D",
-//                null,
-//                "No synopsis available"
-//        );
-//        Movie placeholderMovie2 = new Movie(
-//                R.drawable.ic_filter_icon, // Replace with your placeholder image resource
-//                "Placeholder Movie",
-//                0.0f,
-//                0,
-//                "2D",
-//                null,
-//                "No synopsis available"
-//        );
-//        Movie placeholderMovie3 = new Movie(
-//                R.drawable.example_image2, // Replace with your placeholder image resource
-//                "Placeholder Movie",
-//                0.0f,
-//                0,
-//                "2D",
-//                null,
-//                "No synopsis available"
-//        );
-//        Movie placeholderMovie4 = new Movie(
-//                R.drawable.example_image3, // Replace with your placeholder image resource
-//                "Placeholder Movie",
-//                0.0f,
-//                0,
-//                "2D",
-//                null,
-//                "No synopsis available"
-//        );
-//        Movie placeholderMovie5 = new Movie(
-//                R.drawable.example_image4, // Replace with your placeholder image resource
-//                "Placeholder Movie",
-//                0.0f,
-//                0,
-//                "2D",
-//                null,
-//                "No synopsis available"
-//        );
-////        Movie placeholderMovie2 = placeholderMovie;
-////        Movie placeholderMovie3 = placeholderMovie;
-////        Movie placeholderMovie4 = placeholderMovie;
-//        movieList.add(placeholderMovie);
-//        movieList.add(placeholderMovie2);
-//        movieList.add(placeholderMovie3);
-//        movieList.add(placeholderMovie4);
-//        movieList.add(placeholderMovie5);
-//        return movieList;
-//    }
 }

@@ -11,6 +11,14 @@
         android:label="fragment_movie_page"
         tools:layout="@layout/fragment_movie_page" >
 
+        <action
+            android:id="@+id/action_moviePageFragment_to_seatBookingFragment"
+            app:destination="@id/seatBookingFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+
     </fragment>
     <fragment
         android:id="@+id/homePageFragment"
@@ -26,7 +34,11 @@
             app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_homePageFragment_to_moviePageFragment"
-            app:destination="@id/moviePageFragment" />
+            app:destination="@id/moviePageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/allMovieFragment"
@@ -35,6 +47,15 @@
         tools:layout="@layout/fragment_all_movie" >
         <action
             android:id="@+id/action_allMovieFragment_to_moviePageFragment"
-            app:destination="@id/moviePageFragment" />
+            app:destination="@id/moviePageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
+    <fragment
+        android:id="@+id/seatBookingFragment"
+        android:name="com.example.mycinemaapp.activity.SeatBookingFragment"
+        android:label="fragment_seat_booking"
+        tools:layout="@layout/fragment_seat_booking" />
 </navigation>

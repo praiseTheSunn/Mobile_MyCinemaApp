@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mycinemaapp.R;
 import com.example.mycinemaapp.models.SelectCinemaTimeItem;
+import com.example.mycinemaapp.viewModels.MoviePageViewModel;
+import com.example.mycinemaapp.viewModels.SeatBookingViewModel;
 
 import java.util.List;
 
@@ -20,11 +22,13 @@ public class SelectCinemaTimeAdapter extends RecyclerView.Adapter<SelectCinemaTi
     private List<SelectCinemaTimeItem> selectCinemaTimeItemList;
     private Context context;
     RecyclerView selectTimeRecyclerView;
+    MoviePageViewModel moviePageViewModel;
 
-    public SelectCinemaTimeAdapter(Context context, List<SelectCinemaTimeItem> selectCinemaTimeItemList, RecyclerView selectTimeRecyclerView) {
+    public SelectCinemaTimeAdapter(Context context, List<SelectCinemaTimeItem> selectCinemaTimeItemList, RecyclerView selectTimeRecyclerView, MoviePageViewModel moviePageViewModel) {
         this.selectCinemaTimeItemList = selectCinemaTimeItemList;
         this.context = context;
         this.selectTimeRecyclerView = selectTimeRecyclerView;
+        this.moviePageViewModel = moviePageViewModel;
     }
 
     @NonNull
@@ -51,7 +55,7 @@ public class SelectCinemaTimeAdapter extends RecyclerView.Adapter<SelectCinemaTi
 //                startActivity(intent);
 
 //                findNavController().navigate(R.id);
-                SelectShowTimesAdapter dateSelectAdapter = new SelectShowTimesAdapter(context, showTimes);
+                SelectShowTimesAdapter dateSelectAdapter = new SelectShowTimesAdapter(context, showTimes, item.getCinemaId(), moviePageViewModel);
 //                selectShowRecyclerView
 
                 holder.showTimeRecylerView.setAdapter(dateSelectAdapter);

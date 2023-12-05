@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SeatBookingFragment">
+
+    <!-- movie_details_layout.xml -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Darkened Image Overlay (Covers Top Half) -->
+        <androidx.cardview.widget.CardView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:cardCornerRadius="15dp"
+            android:layout_marginTop="-15dp">
+
+            <ImageView
+                android:id="@+id/darkenedImage"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:alpha="0.7"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_movie_image" />
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:elevation="10dp"
+            android:orientation="vertical">
+            <!-- Movie Information Box -->
+            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:scaleType="centerCrop"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="10dp">
+
+                <RelativeLayout
+                    android:id="@+id/infoBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/white"
+                    android:padding="16dp">
+
+                    <!-- Title -->
+                    <Spinner
+                        android:id="@+id/movieTitleSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Placeholder movie title"
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        />
+
+                        <!-- Date and Time Pickers -->
+                        <LinearLayout
+                            android:id="@+id/dateTimePickerLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/movieTitleSpinner"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="16dp">
+
+                            <!-- Date Spinner -->
+                            <com.google.android.material.card.MaterialCardView
+                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                app:cardCornerRadius="15dp"
+                                android:layout_marginBottom="8dp"
+                                android:padding="8dp"
+                                android:layout_marginEnd="5dp"
+                                app:cardElevation="3dp"
+                                app:cardBackgroundColor="@color/white"
+                                >
+                                <Spinner
+                                    android:id="@+id/dateSpinner"
+                                    android:padding="8dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    />
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <!-- Time Spinner -->
+                            <com.google.android.material.card.MaterialCardView
+                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                app:cardCornerRadius="15dp"
+                                android:layout_marginBottom="8dp"
+                                android:padding="8dp"
+                                android:layout_marginStart="5dp"
+                                app:cardElevation="3dp"
+                                app:cardBackgroundColor="@color/white"
+                                >
+                                <Spinner
+                                    android:id="@+id/timeSpinner"
+                                    android:padding="8dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    />
+                            </com.google.android.material.card.MaterialCardView>
+
+                        </LinearLayout>
+
+                        <!-- Cinema Picker -->
+                        <com.google.android.material.card.MaterialCardView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="15dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:padding="8dp"
+                            android:layout_below="@+id/dateTimePickerLayout"
+                            app:cardElevation="3dp"
+                            app:cardBackgroundColor="@color/white"
+                            >
+                        <Spinner
+                            android:id="@+id/cinemaSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            />
+                        </com.google.android.material.card.MaterialCardView>
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+            <!--            Schedule-->
+
+            <!-- Seat state -->
+            <include
+                android:id="@+id/seat_state"
+                layout="@layout/part_seat_state"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cinema_screen"
+                android:layout_gravity="center"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/seatOptionsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:layout_marginTop="16dp"
+                android:padding="16dp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/bold_arrow_right"
+        android:contentDescription="submit"
+        android:layout_margin="16dp"
+        />
+</FrameLayout>

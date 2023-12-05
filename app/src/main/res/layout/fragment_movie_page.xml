@@ -26,178 +26,176 @@
             android:scaleType="centerCrop"
             android:src="@drawable/default_movie_image" />
         </androidx.cardview.widget.CardView>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:elevation="10dp"
             android:layout_marginTop="150dp"
-            >
+            android:elevation="10dp"
+            android:orientation="vertical">
             <!-- Movie Information Box -->
-            <androidx.cardview.widget.CardView
-                xmlns:android="http://schemas.android.com/apk/res/android"
+            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="15dp"
-                android:scaleType="centerCrop"
+                android:layout_gravity="center"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
-                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                app:cardCornerRadius="15dp"
                 app:cardElevation="10dp">
 
                 <RelativeLayout
-            android:id="@+id/infoBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@android:color/white"
-            android:padding="16dp"
-            >
-
-            <!-- Title -->
-            <TextView
-                android:id="@+id/movieTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Placeholder movie title"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <!-- Rating, Duration, Type -->
-            <LinearLayout
-                android:id="@+id/infoLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/movieTitle"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-
-                <!-- Rating -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <!-- Icon for Rating (Replace with your own icon) -->
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_star" />
-
-                    <!-- Rating Text -->
-                    <TextView
-                        android:id="@+id/ratingText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="5.0"
-                        android:textColor="@android:color/black" />
-                </LinearLayout>
-
-                <!-- Movie Duration -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <!-- Icon for Duration (Replace with your own icon) -->
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_clock" />
-
-                    <!-- Duration Text -->
-                    <TextView
-                        android:id="@+id/durationText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="114 minutes"
-                        android:textColor="@android:color/black" />
-                </LinearLayout>
-
-                <!-- Movie Type -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <!-- Icon for Type (Replace with your own icon) -->
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_movie_type" />
-
-                    <!-- Type Text -->
-                    <TextView
-                        android:id="@+id/typeText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="IMAX"
-                        android:textColor="@android:color/black" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Separator Line -->
-            <View
-                android:id="@+id/separatorLine"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@id/infoLayout"
-                android:layout_marginTop="8dp"
-                android:background="@android:color/darker_gray" />
-
-            <!-- Sypnosis Section -->
-            <LinearLayout
-                android:id="@+id/sypnosisLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/separatorLine"
-                android:orientation="vertical"
-                android:paddingTop="8dp"
-                android:paddingBottom="16dp">
-
-                <!-- Bold "Sypnosis" Text -->
-                <TextView
-                    android:id="@+id/sypnosisTitle"
+                    android:id="@+id/infoBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sypnosis"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/white"
+                    android:padding="16dp">
 
-                <!-- Movie Categories -->
-                <TextView
-                    android:id="@+id/categoriesText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Categories"
-                    android:textColor="@android:color/black" />
+                    <!-- Title -->
+                    <TextView
+                        android:id="@+id/movieTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Placeholder movie title"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-                <!-- Expandable TextView for Sypnosis -->
-                <TextView
-                    android:id="@+id/sypnosisText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:ellipsize="end"
-                    android:maxLines="3"
-                    android:text="Movie Sypnosis..."
-                    android:textColor="@android:color/black" />
+                    <!-- Rating, Duration, Type -->
+                    <LinearLayout
+                        android:id="@+id/infoLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/movieTitle"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
 
-            </LinearLayout>
-        </RelativeLayout>
+                        <!-- Rating -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <!-- Icon for Rating (Replace with your own icon) -->
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_star" />
+
+                            <!-- Rating Text -->
+                            <TextView
+                                android:id="@+id/ratingText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="5.0"
+                                android:textColor="@android:color/black" />
+                        </LinearLayout>
+
+                        <!-- Movie Duration -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <!-- Icon for Duration (Replace with your own icon) -->
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_clock" />
+
+                            <!-- Duration Text -->
+                            <TextView
+                                android:id="@+id/durationText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="114 minutes"
+                                android:textColor="@android:color/black" />
+                        </LinearLayout>
+
+                        <!-- Movie Type -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <!-- Icon for Type (Replace with your own icon) -->
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/movie_type" />
+
+                            <!-- Type Text -->
+                            <TextView
+                                android:id="@+id/typeText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="IMAX"
+                                android:textColor="@android:color/black" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Separator Line -->
+                    <View
+                        android:id="@+id/separatorLine"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/infoLayout"
+                        android:layout_marginTop="8dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <!-- Sypnosis Section -->
+                    <LinearLayout
+                        android:id="@+id/sypnosisLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/separatorLine"
+                        android:orientation="vertical"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="16dp">
+
+                        <!-- Bold "Sypnosis" Text -->
+                        <TextView
+                            android:id="@+id/sypnosisTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Sypnosis"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <!-- Movie Categories -->
+                        <TextView
+                            android:id="@+id/categoriesText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Categories"
+                            android:textColor="@android:color/black" />
+
+                        <!-- Expandable TextView for Sypnosis -->
+                        <TextView
+                            android:id="@+id/sypnosisText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:ellipsize="end"
+                            android:maxLines="3"
+                            android:text="Movie Sypnosis..."
+                            android:textColor="@android:color/black" />
+
+                    </LinearLayout>
+                </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
-<!--            Schedule-->
+            <!--            Schedule-->
             <LinearLayout
                 android:id="@+id/dateOptions"
                 android:layout_width="wrap_content"
@@ -208,20 +206,30 @@
                     android:id="@+id/dateOptionsRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:padding="16dp" />
 
             </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cinemaOptionsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
-                android:layout_marginTop="16dp"
-                android:padding="16dp" />
+                android:layout_marginTop="8dp"
+                android:padding="8dp" />
 
         </LinearLayout>
 
     </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/bold_arrow_right"
+        android:contentDescription="submit"
+        android:layout_margin="16dp"
+        />
 </FrameLayout>

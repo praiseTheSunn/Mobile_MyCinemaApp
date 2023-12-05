@@ -2,11 +2,12 @@ package com.example.mycinemaapp.models;
 
 import android.text.TextUtils;
 
-import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverter;
+
+import com.example.mycinemaapp.parcelable.MovieParcelable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,21 +17,21 @@ import java.util.Arrays;
 public class MovieEntity {
 
 //    @PrimaryKey(autoGenerate = true)
-//    @PrimaryKey
-    public int id;
+    @PrimaryKey
+    long id;
 
-    public String imagePath;
-    @PrimaryKey @NonNull
-    public String title;
-    public float rating;
-    public int duration;
-    public String type;
-    public String categories; // Convert the list of categories to a single string
-    public String synopsis;
+    String imagePath;
+//    @PrimaryKey @NonNull
+     String title;
+     float rating;
+     int duration;
+     String type;
+     String categories; // Convert the list of categories to a single string
+     String synopsis;
 
     // Constructors, getters, and setters
     // Constructor
-    public MovieEntity(int id, String imagePath, String title, float rating, int duration, String type, String categories, String synopsis) {
+    public MovieEntity(long id, String imagePath, String title, float rating, int duration, String type, String categories, String synopsis) {
         this.id = id;
         this.imagePath = imagePath;
         this.title = title;
@@ -62,7 +63,18 @@ public class MovieEntity {
         this.synopsis = synopsis;
     }
 
-    public int getId() {
+    public MovieEntity(MovieParcelable movieParcelable) {
+        this.id = movieParcelable.getId();
+        this.imagePath = movieParcelable.getImagePath();
+        this.title = movieParcelable.getTitle();
+        this.rating = movieParcelable.getRating();
+        this.duration = movieParcelable.getDuration();
+        this.type = movieParcelable.getType();
+        this.categories = movieParcelable.getCategories();
+        this.synopsis = movieParcelable.getSynopsis();
+    }
+
+    public long getId() {
         return id;
     }
 
