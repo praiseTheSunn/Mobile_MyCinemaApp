@@ -20,7 +20,7 @@ public class SelectShowTimesAdapter extends RecyclerView.Adapter<SelectShowTimes
 
     private List<String> showTimes;
     private Context context;
-    MaterialCardView previousSelectTimeCardView;
+
     MoviePageViewModel moviePageViewModel;
     Long cinemaId;
 
@@ -47,22 +47,25 @@ public class SelectShowTimesAdapter extends RecyclerView.Adapter<SelectShowTimes
             @Override
             public void onClick(View view) {
 
-                if (previousSelectTimeCardView == holder.selectTimeCardView) {
+                if (moviePageViewModel.getPreviousSelectTimeCardView() == holder.selectTimeCardView) {
                     if (holder.selectTimeCardView.isChecked()) {
                         holder.selectTimeCardView.setChecked(false);
                     } else {
                         holder.selectTimeCardView.setChecked(true);
                     }
+                    moviePageViewModel.movieShow.setShowTime(null);
+                    moviePageViewModel.movieShow.setCinemaId((long)-1);
                 } else {
                     holder.selectTimeCardView.setChecked(true);
-                    if (previousSelectTimeCardView != null) {
-                        previousSelectTimeCardView.setChecked(false);
+                    if (moviePageViewModel.getPreviousSelectTimeCardView() != null) {
+                        moviePageViewModel.getPreviousSelectTimeCardView().setChecked(false);
                     }
-                    previousSelectTimeCardView = holder.selectTimeCardView;
+                    moviePageViewModel.setPreviousSelectTimeCardView(holder.selectTimeCardView);
+                    moviePageViewModel.movieShow.setShowTime(time);
+                    moviePageViewModel.movieShow.setCinemaId(cinemaId);
                 }
 
-                moviePageViewModel.movieShow.setShowTime(time);
-                moviePageViewModel.movieShow.setCinemaId(cinemaId);
+
             }
         });
     }

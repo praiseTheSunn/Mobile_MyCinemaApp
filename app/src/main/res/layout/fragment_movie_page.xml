@@ -232,4 +232,15 @@
         android:contentDescription="submit"
         android:layout_margin="16dp"
         />
+
+    <ImageView
+        android:id="@+id/fab_back"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="top|left"
+        android:src="@drawable/arrow_left"
+        android:contentDescription="back"
+        android:layout_margin="16dp"
+
+        />
 </FrameLayout>

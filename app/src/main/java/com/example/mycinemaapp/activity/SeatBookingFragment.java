@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.mycinemaapp.R;
 import com.example.mycinemaapp.adapters.SeatAdapter;
@@ -27,9 +29,11 @@ import com.example.mycinemaapp.models.MovieShowEntity;
 import com.example.mycinemaapp.models.Seat;
 import com.example.mycinemaapp.viewModels.SeatBookingViewModel;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class SeatBookingFragment extends Fragment {
 
@@ -46,7 +50,6 @@ public class SeatBookingFragment extends Fragment {
         super.onCreate(savedInstanceState);
         seatBookingViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
                 .get(SeatBookingViewModel.class);
-
         if (getArguments() != null) {
             seatBookingViewModel.movieShow = new MovieShowEntity(getArguments().getParcelable(ARG_PARAM1));
             seatBookingViewModel.setMovieImagePath(getArguments().getString(ARG_PARAM2));
@@ -63,6 +66,24 @@ public class SeatBookingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        seatBookingViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                .get(SeatBookingViewModel.class);
+
+        TextView selectedSeatCount = view.findViewById(R.id.selectedSeatCount);
+        TextView totalPrice = view.findViewById(R.id.totalPrice);
+
+
+        seatBookingViewModel.getSelectedSeat().observe(getViewLifecycleOwner(), newInt -> {
+            selectedSeatCount.setText("x" + newInt);
+            int TotalPrice = newInt * 5;
+
+            // Format the TotalPrice as "45,000đ"
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+            String formattedPrice = "$" + numberFormat.format(TotalPrice);
+
+            totalPrice.setText(formattedPrice);
+        });
 
         seatBookingViewModel.seatList = getSeatList();
 
@@ -94,16 +115,22 @@ public class SeatBookingFragment extends Fragment {
 //            }
 //        });
 
-
-
-
         RecyclerView seatOptionsRecyclerView = view.findViewById(R.id.seatOptionsRecyclerView);
-        SeatAdapter seatAdapter = new SeatAdapter(seatBookingViewModel.seatList);
+        SeatAdapter seatAdapter = new SeatAdapter(seatBookingViewModel.seatList, seatBookingViewModel);
 
         seatOptionsRecyclerView.setAdapter(seatAdapter);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), seatBookingViewModel.numberOfColumns);
         seatOptionsRecyclerView.setLayoutManager(gridLayoutManager);
+
+        ImageView backButton = view.findViewById(R.id.fab_back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Navigation.findNavController(view).navigateUp();
+            }
+        });
     }
 
     private void populateSpinner(@NonNull View view) {
@@ -221,9 +248,9 @@ public class SeatBookingFragment extends Fragment {
     private List<Seat> getSeatList() {
         String SEAT_LAYOUT_TEXT =
                         "00X0XXXXX0X00\n" +
-                        "0XX0XXXXX0XX0\n" +
-                        "XXX0XXXXX0XXX\n" +
-                        "XXX0XXXXX0XXX";
+                        "0XX0XXXXX0++0\n" +
+                        "++X0XXXXX0X++\n" +
+                        "+++0XXXXX0XXX";
 
         List<Seat> seatList = new ArrayList<>();
 
@@ -244,6 +271,9 @@ public class SeatBookingFragment extends Fragment {
                 switch(seatType) {
                     case ('X'):
                         type = "AVAILABLE";
+                        break;
+                    case ('+'):
+                        type = "BOOKED";
                         break;
                     default:
                         break;

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="#f2f2f2">
+    android:background="#f2f2f2"
+    tools:context=".activity.LoginFragment">
 
     <TextView
         android:id="@+id/tvLogin"
@@ -28,22 +29,22 @@
 
     <!-- Your Name -->
     <TextView
-        android:id="@+id/tvYourNameLogin"
+        android:id="@+id/tvYourEmailLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvSignIn"
         android:layout_marginTop="16dp"
-        android:text="YOUR NAME"
+        android:text="YOUR EMAIL"
         android:textColor="#808080" />
 
     <EditText
-        android:id="@+id/etYourNameLogin"
+        android:id="@+id/etYourEmailLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvYourNameLogin"
+        android:layout_below="@id/tvYourEmailLogin"
         android:layout_marginTop="8dp"
         android:background="#ffffff"
-        android:hint="Enter your name"
+        android:hint="Enter your email"
         android:padding="10dp"
         android:textColor="#333333"
         android:inputType="text" />
@@ -53,7 +54,7 @@
         android:id="@+id/tvPasswordLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/etYourNameLogin"
+        android:layout_below="@id/etYourEmailLogin"
         android:layout_marginTop="16dp"
         android:text="PASSWORD"
         android:textColor="#808080" />

@@ -31,6 +31,7 @@ import com.example.mycinemaapp.parcelable.MovieParcelable;
 import com.example.mycinemaapp.parcelable.MovieShowParcelable;
 import com.example.mycinemaapp.repositories.CinemaRepository;
 import com.example.mycinemaapp.repositories.MovieShowRepository;
+import com.example.mycinemaapp.utils.Utility;
 import com.example.mycinemaapp.viewModels.MoviePageViewModel;
 import com.example.mycinemaapp.viewModels.SeatBookingViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -129,19 +130,37 @@ public class MoviePageFragment extends Fragment {
                 public void onClick(View view) {
 
                     moviePageViewModel.setMovieImagePath(mMovie.getImagePath());
+                    Log.d("MoviePageFragment", "" + (moviePageViewModel.movieShow.getShowTime() == null) + " " +  moviePageViewModel.movieShow.getShowDate());
 
-                    Bundle args = new Bundle();
+                    if (moviePageViewModel.movieShow.getShowDate() == null || moviePageViewModel.movieShow.getShowTime().equals("")
+                    || moviePageViewModel.movieShow.getCinemaId() == (long)-1) {
+                        Utility.showToast(getContext(),"Make sure you have selected a show");
 
-                    MovieShowParcelable movieShowParcelable = new MovieShowParcelable(moviePageViewModel.movieShow);
+                    }
+                    else {
 
-                    Log.d("viewModel", "" + moviePageViewModel.movieShow.getShowTime() + moviePageViewModel.movieShow.getShowDate());
+                        Bundle args = new Bundle();
+
+                        MovieShowParcelable movieShowParcelable = new MovieShowParcelable(moviePageViewModel.movieShow);
 
 //                    MovieParcelable movieParcelable = new MovieParcelable(movie);
-                    args.putParcelable(SeatBookingFragment.ARG_PARAM1, movieShowParcelable);
-                    args.putString(SeatBookingFragment.ARG_PARAM2, mMovie.getImagePath());
+                        args.putParcelable(SeatBookingFragment.ARG_PARAM1, movieShowParcelable);
+                        args.putString(SeatBookingFragment.ARG_PARAM2, mMovie.getImagePath());
 
-                    NavDirections action = MoviePageFragmentDirections.actionMoviePageFragmentToSeatBookingFragment();
-                    Navigation.findNavController(view).navigate(action.getActionId(), args);
+                        NavDirections action = MoviePageFragmentDirections.actionMoviePageFragmentToSeatBookingFragment();
+                        Navigation.findNavController(view).navigate(action.getActionId(), args);
+
+//                        Utility.showToast("Make sure you have selected a show");
+                    }
+                }
+            });
+
+            ImageView backButton = view.findViewById(R.id.fab_back);
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Navigation.findNavController(view).navigateUp();
                 }
             });
         }

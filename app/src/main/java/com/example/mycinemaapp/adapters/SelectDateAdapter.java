@@ -61,7 +61,7 @@ public class SelectDateAdapter extends RecyclerView.Adapter<SelectDateAdapter.Da
 
                 if (previousSelectDateCardView == holder.selectDateCardView) {
                     if (holder.selectDateCardView.isChecked()) {
-                        holder.selectDateCardView.setChecked(false);
+//                        holder.selectDateCardView.setChecked(false);
                     }
                     else {
                         holder.selectDateCardView.setChecked(true);
@@ -73,6 +73,7 @@ public class SelectDateAdapter extends RecyclerView.Adapter<SelectDateAdapter.Da
                         previousSelectDateCardView.setChecked(false);
                     }
                     previousSelectDateCardView = holder.selectDateCardView;
+
                 }
 
 //                findNavController().navigate(R.id);

@@ -1,6 +1,8 @@
 package com.example.mycinemaapp.adapters;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,20 +10,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mycinemaapp.R;
 import com.example.mycinemaapp.models.Seat;
+import com.example.mycinemaapp.viewModels.SeatBookingViewModel;
 
 import java.util.List;
 
 public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder> {
 
     private List<Seat> seatList;
+    SeatBookingViewModel seatBookingViewModel;
 
     // Constructor
-    public SeatAdapter(List<Seat> seatList) {
+    public SeatAdapter(List<Seat> seatList, SeatBookingViewModel seatBookingViewModel) {
         this.seatList = seatList;
+        this.seatBookingViewModel = seatBookingViewModel;
     }
 
     @NonNull
@@ -45,10 +51,12 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder
 //                holder.seatImageView.setColorFilter(R.color.seat_state_available);
                 break;
             case "BOOKED":
-                holder.seatImageView.setColorFilter(R.color.seat_state_booked);
+                holder.seatImageView.setColorFilter(ContextCompat.getColor(holder.itemView.getContext(), R.color.seat_state_booked), PorterDuff.Mode.SRC_IN);
+
+//                holder.seatImageView.setImageTintList(ColorStateList.valueOf(getResources().color.R.color.seat_state_booked));
                 break;
             case "SELECTING":
-                holder.seatImageView.setColorFilter(R.color.seat_state_selected);
+                holder.seatImageView.setColorFilter(ContextCompat.getColor(holder.itemView.getContext(), R.color.seat_state_selected), PorterDuff.Mode.SRC_IN);
                 break;
             default:
                 holder.seatImageView.setColorFilter(Color.WHITE);
@@ -65,14 +73,18 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder
                 switch (seat.getSeatState()) {
                     case "AVAILABLE":
                         seat.setSeatState("SELECTING");
+                        notifyItemChanged(position);
+                        seatBookingViewModel.increaseSelectedSeat();
                         break;
                     case "SELECTING":
                         seat.setSeatState("AVAILABLE");
+                        notifyItemChanged(position);
+                        seatBookingViewModel.decreaseSelectedSeat();
                         break;
                     default:
                         break;
                 }
-                notifyItemChanged(position);
+
             }
         });
     }

@@ -1,8 +1,8 @@
 <!-- item_seat.xml -->
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/seatImageView"
@@ -10,7 +10,8 @@
         android:layout_height="40dp"
         android:src="@drawable/seat_unpressed"
         android:layout_gravity="center"
-        android:scaleType="centerInside"/>
+        android:scaleType="centerInside"
+        />
 
     <TextView
         android:id="@+id/seatIdTextView"

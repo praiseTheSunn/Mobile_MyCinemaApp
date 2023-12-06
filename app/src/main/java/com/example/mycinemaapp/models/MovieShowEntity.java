@@ -70,7 +70,7 @@ public class MovieShowEntity {
         showDate = date;
     }
 
-    public void setCinemaId(long cinemaId) {
+    public void setCinemaId(Long cinemaId) {
         this.cinemaId = cinemaId;
     }
 

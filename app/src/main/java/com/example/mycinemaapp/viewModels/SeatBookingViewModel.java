@@ -1,8 +1,10 @@
 package com.example.mycinemaapp.viewModels;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.Pair;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mycinemaapp.models.MovieEntity;
@@ -27,6 +29,32 @@ public class SeatBookingViewModel extends ViewModel {
 
     public List<Seat> seatList;
     public int numberOfColumns;
+
+
+
+    private MutableLiveData<Integer> selectedSeat = new MutableLiveData<>(0);
+
+    public MutableLiveData<Integer> getSelectedSeat() {
+        return selectedSeat;
+    }
+
+    public void increaseSelectedSeat() {
+        try {
+            int val = selectedSeat.getValue();
+            selectedSeat.setValue(val + 1);
+        } catch(NullPointerException e) {
+            Log.e("SeatBooking", "selectedSeat is null " + e);
+        }
+    }
+
+    public void decreaseSelectedSeat() {
+        try {
+            int val = selectedSeat.getValue();
+            selectedSeat.setValue(val - 1);
+        } catch(NullPointerException e) {
+            Log.e("SeatBooking", "selectedSeat is null " + e);
+        }
+    }
 
     private Pair<List<String>, List<Long>> allMoviesAndIds = null;
     private Pair<List<String>, List<Date>> dateStringsAndDates = null;

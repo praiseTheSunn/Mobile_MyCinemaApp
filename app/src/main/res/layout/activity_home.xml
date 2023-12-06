@@ -74,7 +74,9 @@
             android:layout_height="wrap_content"
             android:text="All movies"
             android:textStyle="bold"
-            android:gravity="start"/>
+            android:gravity="start"
+            android:layout_marginTop="8dp"
+            android:textSize="20sp"/>
 
         <!-- View all Text -->
         <TextView
@@ -82,7 +84,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="View all"
-            android:gravity="end"/>
+            android:gravity="end"
+            android:layout_marginTop="8dp"
+            android:textStyle="italic"
+            android:textColor="@color/light_blue_600"
+            android:textSize="15sp"/>
 
     </LinearLayout>
 

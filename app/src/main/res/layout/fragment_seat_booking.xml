@@ -166,6 +166,39 @@
         </LinearLayout>
 
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/seatbookinfo"
+        android:layout_gravity="center|bottom"
+        android:layout_margin="12dp"
+        >
+
+        <TextView
+            android:id="@+id/selectedSeatCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:text="x2"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="20dp"
+            />
+
+        <TextView
+            android:id="@+id/totalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:text="$25"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:layout_marginTop="12dp"
+            />
+
+
+    </LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -174,5 +207,16 @@
         android:src="@drawable/bold_arrow_right"
         android:contentDescription="submit"
         android:layout_margin="16dp"
+        />
+
+    <ImageView
+        android:id="@+id/fab_back"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="top|left"
+        android:src="@drawable/arrow_left"
+        android:contentDescription="back"
+        android:layout_margin="16dp"
+
         />
 </FrameLayout>
