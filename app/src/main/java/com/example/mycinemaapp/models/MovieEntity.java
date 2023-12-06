@@ -29,9 +29,13 @@ public class MovieEntity {
      String categories; // Convert the list of categories to a single string
      String synopsis;
 
+
+
+    String embedLink;
+
     // Constructors, getters, and setters
     // Constructor
-    public MovieEntity(long id, String imagePath, String title, float rating, int duration, String type, String categories, String synopsis) {
+    public MovieEntity(long id, String imagePath, String title, float rating, int duration, String type, String categories, String synopsis,String embedLink) {
         this.id = id;
         this.imagePath = imagePath;
         this.title = title;
@@ -40,10 +44,11 @@ public class MovieEntity {
         this.type = type;
         this.categories = categories;
         this.synopsis = synopsis;
+        this.embedLink = embedLink;
     }
 
     @Ignore
-    public MovieEntity(String imagePath, String title, float rating, int duration, String type, String categories, String synopsis) {
+    public MovieEntity(String imagePath, String title, float rating, int duration, String type, String categories, String synopsis, String embedLink) {
         this.imagePath = imagePath;
         this.title = title;
         this.rating = rating;
@@ -51,9 +56,10 @@ public class MovieEntity {
         this.type = type;
         this.categories = categories;
         this.synopsis = synopsis;
+        this.embedLink = embedLink;
     }
 
-    public MovieEntity(String imagePath, String title, float rating, int duration, String type, ArrayList<String> categories, String synopsis) {
+    public MovieEntity(String imagePath, String title, float rating, int duration, String type, ArrayList<String> categories, String synopsis, String embedLink) {
         this.imagePath = imagePath;
         this.title = title;
         this.rating = rating;
@@ -61,6 +67,7 @@ public class MovieEntity {
         this.type = type;
         this.categories = fromCategoriesList(categories);
         this.synopsis = synopsis;
+        this.embedLink = embedLink;
     }
 
     public MovieEntity(MovieParcelable movieParcelable) {
@@ -72,6 +79,7 @@ public class MovieEntity {
         this.type = movieParcelable.getType();
         this.categories = movieParcelable.getCategories();
         this.synopsis = movieParcelable.getSynopsis();
+        this.embedLink = movieParcelable.getEmbedLink();
     }
 
     public long getId() {
@@ -121,5 +129,13 @@ public class MovieEntity {
     @TypeConverter
     public static ArrayList<String> toCategoriesList(String categories) {
         return new ArrayList<>(Arrays.asList(categories.split(",")));
+    }
+
+    public String getEmbedLink() {
+        return embedLink;
+    }
+
+    public void setEmbedLink(String embedLink) {
+        this.embedLink = embedLink;
     }
 }

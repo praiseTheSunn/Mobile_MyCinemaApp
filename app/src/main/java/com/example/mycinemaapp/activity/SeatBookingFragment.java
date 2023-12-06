@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +28,10 @@ import com.example.mycinemaapp.R;
 import com.example.mycinemaapp.adapters.SeatAdapter;
 import com.example.mycinemaapp.models.MovieShowEntity;
 import com.example.mycinemaapp.models.Seat;
+import com.example.mycinemaapp.parcelable.MovieShowParcelable;
+import com.example.mycinemaapp.utils.Utility;
 import com.example.mycinemaapp.viewModels.SeatBookingViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -129,6 +133,15 @@ public class SeatBookingFragment extends Fragment {
             public void onClick(View view) {
 
                 Navigation.findNavController(view).navigateUp();
+            }
+        });
+
+        FloatingActionButton fab = view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavDirections action = SeatBookingFragmentDirections.actionSeatBookingFragmentToPurchaseFragment();
+                Navigation.findNavController(view).navigate(action);
             }
         });
     }

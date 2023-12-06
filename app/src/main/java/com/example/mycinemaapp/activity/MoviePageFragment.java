@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -161,6 +162,19 @@ public class MoviePageFragment extends Fragment {
                 public void onClick(View view) {
 
                     Navigation.findNavController(view).navigateUp();
+                }
+            });
+
+            // In the original fragment
+            TextView watchTrailer = view.findViewById(R.id.watchTrailer);
+            watchTrailer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Replace the current fragment with WebFragment
+                    FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_movie_page, WatchTrailerFragment.newInstance(mMovie.getEmbedLink()));
+                    transaction.addToBackStack(null); // Optional: Add to back stack for back navigation
+                    transaction.commit();
                 }
             });
         }

@@ -1,4 +1,4 @@
-package com.example.mycinemaapp.activity;
+package com.example.mycinemaapp.viewModels;
 
 import androidx.lifecycle.ViewModel;
 

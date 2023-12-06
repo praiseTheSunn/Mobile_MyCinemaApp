@@ -42,7 +42,7 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder
         Seat seat = seatList.get(position);
 
         // Set data to views
-        holder.seatIdTextView.setText("" + seat.getSeatRow() + seat.getSeatCol());
+//        holder.seatIdTextView.setText("" + seat.getSeatRow() + seat.getSeatCol());
         holder.seatImageView.setImageResource(R.drawable.seat_unpressed);
 
         holder.seatImageView.clearColorFilter();

@@ -20,14 +20,14 @@ public class LoginViewModel extends ViewModel {
         List<UserEntity> userEntityList = userRepository.getAllUsers();
         Log.d("login", "" + userEntityList.size());
 
-//        for (int i = 0; i < userEntityList.size(); i++) {
-//            if (userEntityList.get(i).getPassword().equals(etPassword))
-//                return true;
-//        }
-//        return false;
+        for (int i = 0; i < userEntityList.size(); i++) {
+            if (userEntityList.get(i).getPassword().equals(etPassword))
+                return true;
+        }
+        return false;
 
-        String truePassword = userRepository.getPasswordByEmail(email);
-        return (truePassword.equals(etPassword));
+//        String truePassword = userRepository.getPasswordByEmail(email);
+//        return (truePassword.equals(etPassword));
     }
 
 }

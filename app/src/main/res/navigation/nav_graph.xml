@@ -57,7 +57,11 @@
         android:id="@+id/seatBookingFragment"
         android:name="com.example.mycinemaapp.activity.SeatBookingFragment"
         android:label="fragment_seat_booking"
-        tools:layout="@layout/fragment_seat_booking" />
+        tools:layout="@layout/fragment_seat_booking" >
+        <action
+            android:id="@+id/action_seatBookingFragment_to_purchaseFragment"
+            app:destination="@id/purchaseFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.mycinemaapp.activity.LoginFragment"
@@ -76,5 +80,14 @@
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/purchaseFragment"
+        android:name="com.example.mycinemaapp.activity.PurchaseFragment"
+        android:label="fragment_purchase"
+        tools:layout="@layout/fragment_purchase" >
+        <action
+            android:id="@+id/action_purchaseFragment_to_homePageFragment"
+            app:destination="@id/homePageFragment" />
     </fragment>
 </navigation>

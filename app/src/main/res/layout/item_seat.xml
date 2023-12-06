@@ -19,6 +19,5 @@
         android:layout_height="wrap_content"
         android:textSize="5sp"
         android:layout_gravity="center"
-        android:text="A3"
         android:scaleType="centerInside"/>
 </FrameLayout>

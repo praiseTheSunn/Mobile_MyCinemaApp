@@ -219,63 +219,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public class OverlappingPageTransformer implements ViewPager2.PageTransformer {
-        private static final float OVERLAP_FACTOR = 0.5f; // Adjust this value based on your preference
-
-        @Override
-        public void transformPage(@NonNull View page, float position) {
-            int width = page.getWidth();
-            if (position < -1) {
-                // Page is off-screen to the left
-                page.setAlpha(0f);
-            } else if (position <= 0) {
-                // Page is moving from left to center
-                page.setTranslationX(-width * position * OVERLAP_FACTOR);
-            } else if (position <= 1) {
-                // Page is in the center or moving from center to right
-                page.setTranslationX(0f);
-            } else {
-                // Page is off-screen to the right
-                page.setAlpha(0f);
-            }
-        }
-    }
-    public List<MovieEntity> getMovies(Context context, String fileName) {
-        List<MovieEntity> res = new ArrayList<>();
-        try {
-            List<String[]> csvData = CsvReaderUtil.readCsvFromAssets(context, fileName);
-
-            int i = 0;
-            for (String[] row : csvData) {
-                // Parse CSV data and create MovieEntity objects
-                MovieEntity movie = parseCsvRow(row);
-                movie.setId(i++);
-
-                // Insert each movie into the Room database
-                res.add(movie);
-                int a = 5;
-            }
-            return res;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private MovieEntity parseCsvRow(String[] row) {
-        // Implement logic to convert CSV row to MovieEntity object
-        // For example:
-        return new MovieEntity(
-                (row[0]),    // Assuming the first column is the image resource ID
-                row[1],                      // Title
-                Float.parseFloat(row[2]),    // Rating
-                Integer.parseInt(row[3]),    // Duration
-                row[4],                      // Type
-                new ArrayList<>(Arrays.asList(row[5].split(","))),  // Categories
-                row[6]                       // Synopsis
-        );
-    }
-
     @Override
     public void onPause() {
         super.onPause();

@@ -40,7 +40,7 @@ public class DataInitializer {
 
             List<String[]> csvData = CsvReaderUtil.readCsvFromAssets(context, fileName);
 
-            int i = 0;
+            int i = 1;
             for (String[] row : csvData) {
                 // Parse CSV data and create MovieEntity objects
                 MovieEntity movie = parseCsvRowForMovie(row);
@@ -48,7 +48,6 @@ public class DataInitializer {
 
                 // Insert each movie into the Room database
                 movieRepo.insertMovie(movie);
-                int a = 5;
             }
 
         } catch (IOException e) {
@@ -66,22 +65,22 @@ public class DataInitializer {
                 Integer.parseInt(row[3]),    // Duration
                 row[4],                      // Type
                 new ArrayList<>(Arrays.asList(row[5].split(","))),  // Categories
-                row[6]                       // Synopsis
+                row[6],                      // Synopsis
+                row[7]                      // embedLink
         );
     }
 
     public void initializeMovieShows(String fileName) {
         try {
-
             List<String[]> csvData = CsvReaderUtil.readCsvFromAssets(context, fileName);
 
             int i = 1;
             for (String[] row : csvData) {
-                // Parse CSV data and create MovieEntity objects
+                // Parse CSV data and create MovieShowEntity objects
                 MovieShowEntity movieShow = parseCsvRowForMovieShow(row);
 //                movie.setId(i++);
 
-                // Insert each movie into the Room database
+                // Insert each MovieShowEntity into the Room database
                 movieShowRepository.insertMovie(movieShow);
             }
 
@@ -110,11 +109,10 @@ public class DataInitializer {
 
             int i = 0;
             for (String[] row : csvData) {
-                // Parse CSV data and create MovieEntity objects
+                // Parse CSV data and create CinemaEntity objects
                 CinemaEntity cinemaEntity = parseCsvRowForCinema(row);
-//                movie.setId(i++);
 
-                // Insert each movie into the Room database
+                // Insert each cinema into the Room database
                 cinemaRepository.insertCinema(cinemaEntity);
             }
 
@@ -124,7 +122,7 @@ public class DataInitializer {
     }
 
     private CinemaEntity parseCsvRowForCinema(String[] row) {
-        // Implement logic to convert CSV row to MovieShowEntity object
+        // Implement logic to convert CSV row to CinemaEntity object
         // For example:
 
         return new CinemaEntity(

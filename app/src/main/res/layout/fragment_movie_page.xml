@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragment_movie_page"
     tools:context=".activity.MoviePageFragment">
 
     <!-- movie_details_layout.xml -->
@@ -161,6 +162,17 @@
                         android:orientation="vertical"
                         android:paddingTop="8dp"
                         android:paddingBottom="16dp">
+
+                        <!-- Bold "Sypnosis" Text -->
+                        <TextView
+                            android:id="@+id/watchTrailer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Watch trailer"
+                            android:textColor="@android:color/holo_blue_dark"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
 
                         <!-- Bold "Sypnosis" Text -->
                         <TextView

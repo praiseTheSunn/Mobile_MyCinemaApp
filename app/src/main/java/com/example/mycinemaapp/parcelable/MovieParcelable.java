@@ -7,6 +7,7 @@ import com.example.mycinemaapp.models.MovieEntity;
 
 public class MovieParcelable implements Parcelable {
 
+
     private Long id;
     private String imagePath;
     private String title;
@@ -15,9 +16,10 @@ public class MovieParcelable implements Parcelable {
     private String type;
     private String categories;
     private String synopsis;
+    private String embedLink;
 
     // Constructor
-    public MovieParcelable(String imagePath, String title, float rating, int duration, String type, String categories, String synopsis) {
+    public MovieParcelable(String imagePath, String title, float rating, int duration, String type, String categories, String synopsis, String embedLink) {
         this.imagePath = imagePath;
         this.title = title;
         this.rating = rating;
@@ -25,6 +27,7 @@ public class MovieParcelable implements Parcelable {
         this.type = type;
         this.categories = categories;
         this.synopsis = synopsis;
+        this.embedLink = embedLink;
     }
 
     // Constructor based on Movie object
@@ -47,6 +50,7 @@ public class MovieParcelable implements Parcelable {
         this.type = movie.getType();
         this.categories = movie.getCategories();
         this.synopsis = movie.getSynopsis();
+        this.embedLink = movie.getEmbedLink();
     }
 
     // Parcelable constructor
@@ -126,5 +130,9 @@ public class MovieParcelable implements Parcelable {
 
     public Long getId() {
         return id;
+    }
+
+    public String getEmbedLink() {
+        return embedLink;
     }
 }
